@@ -22,7 +22,7 @@ function myFunction() {
     }
     MailApp.sendEmail({
       to: correo,
-      subject: 'Aviso adeudo',
+      subject: 'AVISO ADEUDO',
       htmlBody: email_cuerpo,
       name: 'Instituto Francisco Possenti'
     });
