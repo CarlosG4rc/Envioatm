@@ -12,7 +12,7 @@ function myFunction() {
     
     var htmlBody_debe = HtmlService.createTemplateFromFile('email_cuerpo');
     htmlBody_debe.nombre = deudores[i][1];
-    htmlBody_debe.adeudo = deudores[i][3];
+    htmlBody_debe.adeudo = deudores[i][3].toString().replace(/(\d+)(\d{3})/, '$1'+','+'$2');    
     var email_cuerpo = htmlBody_debe.evaluate().getContent(); 
     for(var j = 1; j < lastrowbd; j++){
       if(deudores[i][1] == bdsheet.getRange('B' + j).getValue()){
