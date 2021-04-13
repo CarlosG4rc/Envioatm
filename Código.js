@@ -9,13 +9,18 @@ function myFunction() {
   for(var i = 1; i < lastrow; i++){
     var bdsheet = bdSS.getSheetByName(deudores[i][2]);
     var lastrowbd = bdsheet.getDataRange().getNumRows();
-    
+    var word = deudores[i][1];
+    word = word.normalize("NFD").replace(/[\u0300-\u036f]/g, "")
+    word = word.replace(/\s/g, '');
     var htmlBody_debe = HtmlService.createTemplateFromFile('email_cuerpo');
     htmlBody_debe.nombre = deudores[i][1];
     htmlBody_debe.adeudo = deudores[i][3].toString().replace(/(\d+)(\d{3})/, '$1'+','+'$2');    
     var email_cuerpo = htmlBody_debe.evaluate().getContent(); 
-    for(var j = 1; j < lastrowbd; j++){
-      if(deudores[i][1] == bdsheet.getRange('B' + j).getValue()){
+    for(var j = 1; j <= lastrowbd; j++){
+      sentense = bdsheet.getRange('B' + j).getValue();
+      sentense = sentense.normalize("NFD").replace(/[\u0300-\u036f]/g, "")
+      sentense = sentense.replace(/\s/g, '');
+      if(sentense.includes(word)){
         var correo = bdsheet.getRange('E' + j).getValue();
         j = lastrowbd + 1;
       }
@@ -27,4 +32,3 @@ function myFunction() {
       name: 'Instituto Francisco Possenti'
     });
   }
-}
